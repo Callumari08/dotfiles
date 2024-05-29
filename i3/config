@@ -34,6 +34,11 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
+exec setxkbmap gb
+
+# Notification Manager 
+exec dunst 
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2% && $refresh_i3status
@@ -56,12 +61,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
 bindsym $mod+d exec rofi -show drun
-# A more modern dmenu replacement is rofi:
-# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
-# There also is i3-dmenu-desktop which only displays applications shipping a
-# .desktop file. It is a wrapper around dmenu, so you need that installed.
+bindsym $mod+z exec rofi -show window
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # Hide Window
@@ -196,7 +197,7 @@ bar {
 	status_command i3status -c /home/$USER/.config/i3status/i3status.conf
 }
 
-#exec_always picom -f
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
 exec_always feh --bg-scale ~/Documents/wallpapers/finland-house.jpg 
 # Window Colour Schemes
 set $bgcolor #aabcc0
