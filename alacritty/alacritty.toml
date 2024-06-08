@@ -1,0 +1,6 @@
+# [cursor]
+# shape = "Beam"
+
+[font.normal]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Regular"
