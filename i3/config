@@ -9,6 +9,8 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+exec setxkbmap gb
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -34,10 +36,10 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-exec setxkbmap gb
 
 # Notification Manager 
 exec dunst 
+
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -45,6 +47,8 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+bindsym $mod+Shift+s exec flameshot gui -c
 
 # Start Sound Mixer
 bindsym $mod+m exec alsamixer
@@ -163,6 +167,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+Mod1+e exec "shutdown now"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -198,7 +203,8 @@ bar {
 }
 
 exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
-exec_always feh --bg-scale ~/Documents/wallpapers/finland-house.jpg 
+# exec_always feh --bg-scale ~/Documents/wallpapers/finland-house.jpg
+exec redshift -l 51.50853:0.12574
 # Window Colour Schemes
 set $bgcolor #aabcc0
 set $in-bgcolor #6f8e95
