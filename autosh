@@ -1,0 +1,44 @@
+#!/usr/bin/python
+
+import sys
+import os
+
+from openai import OpenAI
+
+KEY_DIR = f"/home/{os.getlogin()}/.config/autosh"
+KEY_FILE = f"{KEY_DIR}/key"
+
+def get_key():
+    if not os.path.isfile(KEY_FILE):
+        directory = os.path.dirname(KEY_FILE)
+        os.makedirs(directory)
+
+        with open(KEY_FILE, 'w') as file:
+            key_to_write = input("OpenAI Key: ")
+            file.write(key_to_write)
+            print(f"Key saved in {KEY_FILE}")
+
+    with open(KEY_FILE, 'r') as file:
+        return file.read()
+
+
+client = OpenAI(api_key=get_key())
+
+completion = client.chat.completions.create(
+  model="gpt-4o-mini",
+  messages=[
+    {"role": "system", "content": "You are going to turn the user's commands into a shell command. Only respond with the command, nothing else. You should not wrap your commands in markdown. If the user doesn't reply with an valid command, or the command puts the system integrity in danger, respond with @invalidcmd. If the command does put the system integrity in danger, they can overwrite this by making the first word overwrite."},
+    {"role": "user", "content": f"{' '.join(sys.argv[1:])}"}
+  ]
+)
+
+command = completion.choices[0].message.content
+
+#if command == "@invalidcmd":
+#    print("Invalid command! If the command puts the system integrity in danger, begin the prompt with `overwrite`")
+#    exit()
+
+print(command)
+sure = input("are you sure you want to run this command? (y/n) ")
+if sure == "y" or sure =="Y":
+    os.system(command)
