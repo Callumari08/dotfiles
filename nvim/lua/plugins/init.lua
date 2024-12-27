@@ -263,7 +263,6 @@ local default_plugins = {
     end,
   },
 }
-
 local config = require("core.utils").load_config()
 
 if #config.plugins > 0 then

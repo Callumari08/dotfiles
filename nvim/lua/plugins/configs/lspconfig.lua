@@ -64,4 +64,14 @@ require("lspconfig").lua_ls.setup {
   },
 }
 
+require('lspconfig').clangd.setup {
+  capabilities = vim.lsp.protocol.make_client_capabilities(),
+  on_attach = function(client, _)
+    if client.server_capabilities.semanticTokensProvider then
+      vim.notify("Semantic Highlighting Enabled")
+    end
+  end,
+}
+
+
 return M
